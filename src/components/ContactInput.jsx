@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "./Button";
+import { useSelector, useDispatch } from "react-redux";
+import { addContact,updateContact } from "../slices/contactSlice";
 
-const ContactInput = () => {
-  const [contact, setContact] = useState({
-    Name: "",
-    Number: "",
-    Address: "",
-  });
+const ContactInput = ({update,contact,setContact,oldObj,setOldObj}) => {
+  const allContacts = useSelector((state) => state.contacts.allContacts);
+  const dispatch = useDispatch();
+  const updateContactFunc = () => {
+    const numberExists = allContacts.findIndex(
+      (obj) => obj.Number === contact.Number
+    );
+    // if He/She wanna change the number and the new number is already taken
+    if (numberExists !== -1 && oldObj.Number!==contact.Number) {
+      alert("Number Already Exists");
+      return;
+    }
+    dispatch(updateContact({ oldObj, newObj: contact }));
+  };
+  const addContactFunc = () => {
+    const numberExists = allContacts.findIndex(
+      (obj) => obj.Number === contact.Number
+    );
+    if (numberExists !== -1) {
+      alert("Number Already Exists");
+      return;
+    }
+    dispatch(addContact(contact));
+  };
   return (
     <>
-      <div className="w-full h-screen flex flex-col items-center">
+      <div className="w-full flex flex-col items-center">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -24,7 +44,10 @@ const ContactInput = () => {
             name="Name"
             value={contact.Name}
             onChange={(e) => {
-              setContact((prev) => ({ prev, [e.target.name]: e.target.value }));
+              setContact((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+              }));
             }}
           />
           <input
@@ -34,7 +57,10 @@ const ContactInput = () => {
             name="Number"
             value={contact.Number}
             onChange={(e) => {
-              setContact((prev) => ({ prev, [e.target.name]: e.target.value }));
+              setContact((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+              }));
             }}
           />
           <input
@@ -44,11 +70,26 @@ const ContactInput = () => {
             name="Address"
             value={contact.Address}
             onChange={(e) => {
-              setContact((prev) => ({ prev, [e.target.name]: e.target.value }));
+              setContact((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+              }));
             }}
           />
-          <div type="submit">
-            <Button>Add</Button>
+          <div
+            type="submit"
+            onClick={() => {
+              if (!update) {
+                addContactFunc();
+                setContact({ Name: "", Number: "", Address: "" });
+              } else {
+                updateContactFunc();
+                setContact({ Name: "", Number: "", Address: "" });
+                setOldObj({ Name: "", Number: "", Address: "" });
+              }
+            }}
+          >
+            <Button>{update ? "Update" : "Add"}</Button>
           </div>
         </form>
       </div>
