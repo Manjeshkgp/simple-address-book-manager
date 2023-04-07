@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-const Header = () => {
+import Button from "./Button";
+const Header = ({setShowSorted,showSorted}) => {
   const [search, setSearch] = useState("");
   return (
     <>
-      <div className="h-12 flex justify-center items-center bg-gradient-to-b from-[#0b0529] to-transparent text-gray-200">
+      <div className="h-12 flex justify-center gap-4 items-center bg-gradient-to-b from-[#0b0529] to-transparent text-gray-200">
         <div className="flex w-60 bg-gray-950 rounded group">
           <AiOutlineSearch className="w-8 h-8 group-focus-within:hidden" />
           <input
@@ -17,6 +18,7 @@ const Header = () => {
             }}
           />
         </div>
+        <div onClick={()=>setShowSorted(!showSorted)}><Button>{showSorted?"Reset":"Sort By Name"}</Button></div>
       </div>
     </>
   );

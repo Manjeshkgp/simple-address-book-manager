@@ -7,7 +7,9 @@ import { useState } from "react";
 
 const App = () => {
   const contacts = useSelector((state) => state.contacts.allContacts);
+  const sortedContacts = useSelector((state)=>state.contacts.sortedContacts);
   const [update, setUpdate] = useState(false);
+  const [showSorted,setShowSorted] = useState(false);
   const [contact, setContact] = useState({
     Name: "",
     Number: "",
@@ -20,10 +22,11 @@ const App = () => {
   });
   return (
     <>
-      <Header />
+      <Header setShowSorted={setShowSorted} showSorted={showSorted}/>
       <div className="h-max my-6 flex justify-center items-center">
         <ContactInput
           update={update}
+          setUpdate={setUpdate}
           contact={contact}
           setContact={setContact}
           oldObj={oldObj}
@@ -31,7 +34,9 @@ const App = () => {
         />
       </div>
       <div className="h-max my-6 flex flex-col gap-y-4 justify-center items-center">
-        {contacts.map((contact) => (
+        {showSorted? sortedContacts.map((contact) => (
+          <Contact key={contact?.Number} data={contact} setUpdate={setUpdate} setOldObj={setOldObj} setContact={setContact} />
+        )):contacts.map((contact) => (
           <Contact key={contact?.Number} data={contact} setUpdate={setUpdate} setOldObj={setOldObj} setContact={setContact} />
         ))}
       </div>

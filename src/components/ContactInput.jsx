@@ -3,21 +3,29 @@ import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 import { addContact,updateContact } from "../slices/contactSlice";
 
-const ContactInput = ({update,contact,setContact,oldObj,setOldObj}) => {
+const ContactInput = ({update,setUpdate,contact,setContact,oldObj,setOldObj}) => {
   const allContacts = useSelector((state) => state.contacts.allContacts);
   const dispatch = useDispatch();
   const updateContactFunc = () => {
+    if(contact.Number===""){
+      setUpdate(false);
+      return alert("Number Can't be empty")
+    }
     const numberExists = allContacts.findIndex(
       (obj) => obj.Number === contact.Number
     );
     // if He/She wanna change the number and the new number is already taken
     if (numberExists !== -1 && oldObj.Number!==contact.Number) {
+      setUpdate(false);
       alert("Number Already Exists");
       return;
     }
     dispatch(updateContact({ oldObj, newObj: contact }));
   };
   const addContactFunc = () => {
+    if(contact.Number===""){
+      return alert("Number Can't be empty")
+    }
     const numberExists = allContacts.findIndex(
       (obj) => obj.Number === contact.Number
     );
