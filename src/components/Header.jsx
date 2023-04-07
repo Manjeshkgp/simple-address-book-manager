@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Button from "./Button";
-const Header = ({setShowSorted,showSorted}) => {
-  const [search, setSearch] = useState("");
+const Header = ({setShowSorted,showSorted,search, setSearch}) => {
   return (
     <>
       <div className="h-12 flex justify-center gap-4 items-center bg-gradient-to-b from-[#0b0529] to-transparent text-gray-200">
