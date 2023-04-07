@@ -25,6 +25,7 @@ const Contact = ({ data, setUpdate, setOldObj, setContact }) => {
           <div
             onClick={() => {
               dispatch(deleteContact(data));
+              setUpdate(false);
             }}
             className="px-1 cursor-pointer"
           >

@@ -4,8 +4,8 @@ import Button from "./Button";
 const Header = ({setShowSorted,showSorted,search, setSearch}) => {
   return (
     <>
-      <div className="h-12 flex justify-center gap-4 items-center bg-gradient-to-b from-[#0b0529] to-transparent text-gray-200">
-        <div className="flex w-60 bg-gray-950 rounded group">
+      <div className="h-12 flex justify-center gap-4 items-center bg-yellow-400 text-gray-200">
+        <div className="flex w-max bg-gray-950 rounded group">
           <AiOutlineSearch className="w-8 h-8 group-focus-within:hidden" />
           <input
             className="focus:outline-none bg-transparent h-8 px-1"

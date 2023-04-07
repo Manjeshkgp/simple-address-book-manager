@@ -7,9 +7,8 @@ const ContactInput = ({update,setUpdate,contact,setContact,oldObj,setOldObj}) =>
   const allContacts = useSelector((state) => state.contacts.allContacts);
   const dispatch = useDispatch();
   const updateContactFunc = () => {
-    if(contact.Number===""){
-      setUpdate(false);
-      return alert("Number Can't be empty")
+    if(contact.Number.length<5){
+      return alert("Number Must Contain Atleast 5 Digits")
     }
     const numberExists = allContacts.findIndex(
       (obj) => obj.Number === contact.Number
@@ -23,8 +22,8 @@ const ContactInput = ({update,setUpdate,contact,setContact,oldObj,setOldObj}) =>
     dispatch(updateContact({ oldObj, newObj: contact }));
   };
   const addContactFunc = () => {
-    if(contact.Number===""){
-      return alert("Number Can't be empty")
+    if(contact.Number.length<5){
+      return alert("Number Must Contain Atleast 5 Digits")
     }
     const numberExists = allContacts.findIndex(
       (obj) => obj.Number === contact.Number
@@ -59,8 +58,8 @@ const ContactInput = ({update,setUpdate,contact,setContact,oldObj,setOldObj}) =>
             }}
           />
           <input
-            type="tel"
-            className="focus:outline-none px-1 h-8 bg-gray-900 rounded focus:bg-gray-950"
+            type="number"
+            className="focus:outline-none px-1 h-8 bg-gray-900 rounded focus:bg-gray-950 inputNum"
             placeholder="Number"
             name="Number"
             value={contact.Number}
@@ -92,6 +91,7 @@ const ContactInput = ({update,setUpdate,contact,setContact,oldObj,setOldObj}) =>
                 setContact({ Name: "", Number: "", Address: "" });
               } else {
                 updateContactFunc();
+                setUpdate(false);
                 setContact({ Name: "", Number: "", Address: "" });
                 setOldObj({ Name: "", Number: "", Address: "" });
               }
